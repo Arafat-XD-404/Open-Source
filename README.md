@@ -13,4 +13,4 @@ chmod 777 WEB
 ./WEB
 
 
-https://ibb.co.com/VYnD3wDF
+![20251027_192442](https://github.com/user-attachments/assets/804cf751-1cd2-4b2c-94ce-347117237b11)
