@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="bn">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   Fake Subscribe Count | Developer Afzal
+  </title>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+Da+2:wght@400;700&amp;family=Montserrat:wght@400;700&amp;display=swap" rel="stylesheet"/>
+  <style>
+   :root {
+            --primary-color: #000;
+            --secondary-color: #FFD700; /* Gold */
+            --text-color: #fff;
+            --font-bn: 'Baloo Da 2', sans-serif;
+            --font-en: 'Montserrat', sans-serif;
+            --background-gradient: linear-gradient(135deg, #101010 0%, #000000 100%);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-bn);
+            background: var(--background-gradient);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 5vh;
+        }
+
+        /* Main Container for the "Notice Board" Effect */
+        .container {
+            width: 90%;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.05); 
+            backdrop-filter: blur(10px); 
+            border: 2px solid var(--secondary-color);
+            border-radius: 30px; 
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.9);
+            transform: perspective(1000px) rotateX(2deg) rotateY(-2deg); 
+            margin-bottom: 50px;
+            animation: fadeInDown 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; 
+            opacity: 0;
+            display: flex; 
+            flex-direction: column;
+        }
+        
+        @media (max-width: 650px) {
+            .container {
+                padding: 20px;
+                transform: none; 
+            }
+        }
+
+        @keyframes fadeInDown {
+            0% {opacity: 0; transform: translateY(-50px) perspective(1000px) rotateX(5deg) rotateY(-5deg);}
+            100% {opacity: 1; transform: translateY(0) perspective(1000px) rotateX(2deg) rotateY(-2deg);}
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            position: relative; 
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            color: var(--secondary-color);
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+        }
+
+        /* Animated Border (পালসিং দাগ) */
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%; 
+            height: 3px;
+            background: var(--secondary-color);
+            border-radius: 50%;
+            box-shadow: 0 0 15px var(--secondary-color);
+            animation: pulseBorder 1.5s infinite alternate; 
+        }
+        
+        @keyframes pulseBorder {
+            0% {box-shadow: 0 0 5px var(--secondary-color); opacity: 0.5;}
+            100% {box-shadow: 0 0 25px var(--secondary-color); opacity: 1;}
+        }
+        
+        .developer-credit {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .developer-credit img {
+            width: 150px; 
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 6px solid var(--secondary-color);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.7);
+            margin-bottom: 15px;
+        }
+
+        .developer-credit p {
+            font-family: var(--font-bn);
+            font-size: 1.8em;
+            color: var(--secondary-color);
+            text-shadow: 0 0 5px var(--secondary-color);
+            margin-top: 5px;
+        }
+
+        .form-section {
+            font-family: var(--font-en);
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 2px solid rgba(255, 255, 255, 0.2);
+            transform: perspective(1000px) rotateX(-2deg) rotateY(2deg);
+        }
+
+        .form-group {margin-bottom: 20px;}
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 700;
+            color: var(--secondary-color);
+            font-size: 1.1em;
+            text-transform: uppercase;
+        }
+
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid var(--secondary-color);
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.15);
+            color: var(--text-color);
+            font-size: 1.1em;
+        }
+        
+        .logo-preview-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        #logo-preview {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #ccc;
+            display: none; 
+        }
+
+        #logo-select-button {
+            padding: 12px 20px;
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+        
+        #confirm-button {
+            width: 100%;
+            padding: 18px;
+            margin-top: 30px;
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            border-radius: 10px;
+            font-size: 1.5em;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        /* --- Animation Page --- */
+        .animation-page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-color); 
+            display: none; 
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        
+        #back-button {
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            padding: 12px 25px;
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            border-radius: 8px;
+            font-family: var(--font-en);
+            font-size: 1.2em;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        .display-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: 50px;
+            color: #fff;
+            width: 100%; 
+            padding: 0 20px; 
+        }
+
+        #final-logo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--secondary-color);
+            margin-bottom: 20px;
+        }
+
+        #final-channel-name {
+            font-family: var(--font-en);
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            color: var(--secondary-color); 
+        }
+
+        #subscriber-label {
+            font-family: var(--font-en);
+            font-size: 1.5em;
+            color: #fff;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        #subscriber-count {
+            font-family: var(--font-en);
+            font-size: 5em;
+            font-weight: 700;
+            color: #fff;
+            margin-top: 10px;
+            letter-spacing: 5px;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            min-width: 300px; 
+            text-align: center; 
+        }
+  </style>
+ </head>
+ <body>
+  <div class="container" id="main-form-view">
+   <div class="header">
+    <h1>
+     Fake Subscribe Count
+    </h1>
+    <p>
+     এটি শুধুমাত্র মজার জন্য বানানো হয়েছে - সবাই **মজা করেন উরাধুরা!**
+    </p>
+    <p class="motto" style="font-family: var(--font-en); font-weight: 700; color: #fff; margin-top: 10px; font-size: 1.1em;">
+     "Made For Fun"
+    </p>
+   </div>
+   <div class="developer-credit">
+    <img alt="Developer Afzal Image" loading="lazy" src="https://i.imgur.com/qO4vPHW.jpeg"/>
+    <p>
+     Developer Afzal
+    </p>
+   </div>
+   <div class="form-section">
+    <form id="subscriber-form">
+     <div class="form-group">
+      <label for="channel-name">
+       Your Channel Name
+      </label>
+      <input id="channel-name" placeholder="Enter Channel Name" required="" type="text"/>
+     </div>
+     <div class="form-group">
+      <label for="channel-logo">
+       Your Channel Logo
+      </label>
+      <div class="logo-preview-container">
+       <input accept="image/*" id="channel-logo-input" style="display: none;" type="file"/>
+       <button id="logo-select-button" type="button">
+        SELECT LOGO (TAP TO GALLERY)
+       </button>
+       <img alt="Logo Preview" id="logo-preview" src="#"/>
+      </div>
+     </div>
+     <div class="form-group">
+      <label for="start-subscribers">
+       Animation Start From (Start Subscriber Count)
+      </label>
+      <input id="start-subscribers" min="0" placeholder="E.g., 1000" required="" type="number"/>
+     </div>
+     <div class="form-group">
+      <label for="target-subscribers">
+       Animation Ends At (Target Subscriber Count)
+      </label>
+      <input id="target-subscribers" min="1" placeholder="E.g., 100000" required="" type="number"/>
+     </div>
+     <button id="confirm-button" type="submit">
+      CONFIRM
+     </button>
+    </form>
+   </div>
+  </div>
+  <div class="animation-page" id="animation-view">
+   <button id="back-button">
+    <span class="icon-arrow">
+     ←
+    </span>
+    BACK
+   </button>
+   <div class="display-area">
+    <img alt="Channel Logo" id="final-logo" src="#"/>
+    <h2 id="final-channel-name">
+     Channel Name Will Appear Here
+    </h2>
+    <div style="height: 15px;">
+    </div>
+    <p id="subscriber-label">
+     LIVE SUBSCRIBER COUNT
+    </p>
+    <p id="subscriber-count">
+     0
+    </p>
+   </div>
+  </div>
+  <script>
+   const formView = document.getElementById('main-form-view');
+        const animationView = document.getElementById('animation-view');
+        const form = document.getElementById('subscriber-form');
+        const logoInput = document.getElementById('channel-logo-input');
+        const logoSelectButton = document.getElementById('logo-select-button');
+        const logoPreview = document.getElementById('logo-preview');
+        const backButton = document.getElementById('back-button');
+
+        let uploadedLogoURL = '';
+        let animationInterval;
+        
+        // ** 1. Logo Selection Logic **
+        logoSelectButton.addEventListener('click', () => {
+            logoInput.click(); 
+        });
+
+        logoInput.addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                if (file.size > 5 * 1024 * 1024) { 
+                    alert("Image is too large (max 5MB). Please choose a smaller file.");
+                    logoInput.value = ""; 
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    logoPreview.src = e.target.result;
+                    logoPreview.style.display = 'block';
+                    uploadedLogoURL = e.target.result; 
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // ** 2. Form Submission and Transition **
+        form.addEventListener('submit', (e) => {
+            e.preventDefault(); 
+            
+            const channelName = document.getElementById('channel-name').value;
+            const startSubs = parseInt(document.getElementById('start-subscribers').value);
+            const targetSubs = parseInt(document.getElementById('target-subscribers').value);
+
+            if (startSubs >= targetSubs || isNaN(startSubs) || isNaN(targetSubs)) {
+                alert("Please enter valid subscriber numbers where the Target is greater than the Start count.");
+                return;
+            }
+
+            document.getElementById('final-channel-name').textContent = channelName;
+            document.getElementById('final-logo').src = uploadedLogoURL || "https://via.placeholder.com/120/333333/FFFFFF?text=LOGO";
+
+            formView.style.display = 'none';
+            animationView.style.display = 'flex';
+            
+            startSubscriberAnimation(startSubs, targetSubs);
+        });
+        
+        // ** 3. Subscriber Animation Logic (আপডেট করা লজিক) **
+        function startSubscriberAnimation(start, target) {
+            let current = start;
+            const countDisplay = document.getElementById('subscriber-count');
+            
+            countDisplay.textContent = start.toLocaleString('en-US'); 
+
+            if (animationInterval) {
+                clearInterval(animationInterval);
+            }
+            
+            let isPaused = false;
+            let pauseTimeout;
+
+            // প্রতি 500 মিলিসেকেন্ডে (অর্ধেক সেকেন্ডে) একবার আপডেট।
+            const intervalTime = 500; 
+
+            animationInterval = setInterval(() => {
+                if (current >= target) {
+                    clearInterval(animationInterval);
+                    clearTimeout(pauseTimeout);
+                    return;
+                }
+
+                if (isPaused) {
+                    return; // যদি পজ করা থাকে, তাহলে কোনো কাজ হবে না
+                }
+
+                // --- বৃদ্ধির লজিক ---
+                const randomIncrease = Math.floor(Math.random() * 2); // 0 বা 1 করে বাড়বে
+                current += randomIncrease;
+                
+                if (current > target) {
+                    current = target;
+                }
+                countDisplay.textContent = current.toLocaleString('en-US');
+
+                // --- পজ করার শর্ত ---
+                // প্রতি 20 বার বাড়ার পর (গড়ে প্রতি 10 সেকেন্ড পর) প্রায় 5% সম্ভাবনা থাকবে পজ হওয়ার।
+                // অর্থাৎ, এটি র্যান্ডমভাবে ঘটবে।
+                if (Math.random() < 0.05) { 
+                    isPaused = true;
+                    
+                    // 3 থেকে 12 সেকেন্ডের মধ্যে একটি র‍্যান্ডম পজ টাইম নির্বাচন
+                    const pauseTimeSeconds = Math.floor(Math.random() * (12 - 3 + 1)) + 3;
+                    const pauseTime = pauseTimeSeconds * 1000; // মিলিসেকেন্ডে রূপান্তর
+                    
+                    // পজ শুরু করার জন্য কনসোল লগ (আপনি যদি ডেভেলপার টুলস দেখেন)
+                    console.log(`Pausing for ${pauseTimeSeconds} seconds at sub count ${current}`);
+
+                    pauseTimeout = setTimeout(() => {
+                        // পজ শেষ হলে
+                        isPaused = false;
+                        
+                        // পজ শেষে 'একট' অথবা 'একটা' (১ জন) বাড়ানো
+                        current += 1;
+                        if (current > target) {
+                            current = target;
+                        }
+                        countDisplay.textContent = current.toLocaleString('en-US');
+                        
+                        // পুনরায় শুরু করার জন্য কনসোল লগ
+                        console.log(`Resuming at sub count ${current}`);
+                        
+                    }, pauseTime);
+                }
+
+            }, intervalTime); 
+        }
+
+        // ** 4. Back Button Logic **
+        backButton.addEventListener('click', () => {
+            if (animationInterval) {
+                clearInterval(animationInterval);
+            }
+            animationView.style.display = 'none';
+            formView.style.display = 'flex'; 
+            document.getElementById('subscriber-count').textContent = '0'; 
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+             formView.style.display = 'flex';
+        });
+  </script>
+ </body>
+</html>
