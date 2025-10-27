@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="bn">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>
+   JY BOOM SHORTS - Your Dream Shop
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js">
+  </script>
+  <style>
+   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        * { font-family: 'Poppins', sans-serif; }
+        
+        .slide-in {
+            animation: slideIn 0.5s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.3s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .pulse-btn {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .hidden { display: none !important; }
+        .show { display: block !important; }
+  </style>
+ </head>
+ <body class="bg-gray-50">
+  <!-- Success/Error Messages -->
+  <div class="fixed top-0 left-0 right-0 z-50 hidden" id="messageContainer">
+   <div class="bg-green-500 text-white p-4 text-center slide-in" id="messageBox">
+    <span id="messageText">
+    </span>
+   </div>
+  </div>
+  <!-- Auth Container -->
+  <div class="min-h-screen bg-gradient-to-br from-blue-600 to-purple-700 flex items-center justify-center p-4" id="authContainer">
+   <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-8 fade-in">
+    <!-- Logo and Title -->
+    <div class="text-center mb-8">
+     <img alt="JY BOOM SHORTS" class="w-20 h-20 mx-auto rounded-full mb-4 shadow-lg" src="https://i.imgur.com/DNCjTmA.jpeg"/>
+     <h1 class="text-2xl font-bold text-gray-800">
+      JY BOOM SHORTS
+     </h1>
+     <div class="w-16 h-1 bg-green-500 mx-auto mt-2 rounded">
+     </div>
+    </div>
+    <!-- Login Form -->
+    <div id="loginForm">
+     <h2 class="text-xl font-semibold text-center mb-6 text-gray-700">
+      লগইন করুন
+     </h2>
+     <form id="loginFormElement">
+      <div class="mb-4">
+       <input class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" id="loginEmail" placeholder="ইমেইল" required="" type="email"/>
+      </div>
+      <div class="mb-6">
+       <input class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" id="loginPassword" placeholder="পাসওয়ার্ড" required="" type="password"/>
+      </div>
+      <button class="w-full bg-blue-600 text-white p-3 rounded-lg font-semibold hover:bg-blue-700 transition duration-300" type="submit">
+       লগইন করুন
+      </button>
+     </form>
+     <p class="text-center mt-4 text-gray-600">
+      নতুন অ্যাকাউন্ট?
+      <button class="text-blue-600 font-semibold hover:underline" id="showRegister">
+       রেজিস্টার করুন
+      </button>
+     </p>
+    </div>
+    <!-- Register Form -->
+    <div class="hidden" id="registerForm">
+     <h2 class="text-xl font-semibold text-center mb-6 text-gray-700">
+      রেজিস্টার করুন
+     </h2>
+     <form id="registerFormElement">
+      <div class="mb-4">
+       <input class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" id="registerName" placeholder="পূর্ণ নাম" required="" type="text"/>
+      </div>
+      <div class="mb-4">
+       <input class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" id="registerEmail" placeholder="ইমেইল" required="" type="email"/>
+      </div>
+      <div class="mb-6">
+       <input class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" id="registerPassword" placeholder="পাসওয়ার্ড" required="" type="password"/>
+      </div>
+      <button class="w-full bg-green-600 text-white p-3 rounded-lg font-semibold hover:bg-green-700 transition duration-300" type="submit">
+       রেজিস্টার করুন
+      </button>
+     </form>
+     <p class="text-center mt-4 text-gray-600">
+      ইতিমধ্যে অ্যাকাউন্ট আছে?
+      <button class="text-blue-600 font-semibold hover:underline" id="showLogin">
+       লগইন করুন
+      </button>
+     </p>
+    </div>
+   </div>
+  </div>
+  <!-- Main Website -->
+  <div class="hidden" id="mainWebsite">
+   <!-- Header -->
+   <header class="bg-white shadow-lg sticky top-0 z-40">
+    <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+     <div class="flex items-center space-x-3">
+      <button class="text-2xl text-gray-700" id="menuToggle">
+       <i class="fas fa-bars">
+       </i>
+      </button>
+      <img alt="Logo" class="w-10 h-10 rounded-full" src="https://i.imgur.com/DNCjTmA.jpeg"/>
+      <h1 class="text-xl font-bold text-gray-800">
+       JY BOOM SHORTS
+      </h1>
+     </div>
+     <div class="flex items-center space-x-2">
+      <span class="w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold" id="userIcon">
+      </span>
+     </div>
+    </div>
+   </header>
+   <!-- Side Menu -->
+   <div class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden" id="sideMenu">
+    <div class="bg-white w-80 h-full shadow-xl">
+     <div class="p-6 border-b">
+      <div class="flex items-center justify-between">
+       <h2 class="text-xl font-bold text-gray-800">
+        মেনু
+       </h2>
+       <button class="text-2xl text-gray-600" id="closeMenu">
+        <i class="fas fa-times">
+        </i>
+       </button>
+      </div>
+     </div>
+     <nav class="p-4">
+      <ul class="space-y-4">
+       <li>
+        <button class="w-full text-left p-3 rounded-lg hover:bg-gray-100 flex items-center space-x-3" id="homeBtn">
+         <i class="fas fa-home text-blue-500">
+         </i>
+         <span>
+          HOME
+         </span>
+        </button>
+       </li>
+       <li>
+        <button class="w-full text-left p-3 rounded-lg hover:bg-gray-100 flex items-center space-x-3" id="myOrderBtn">
+         <i class="fas fa-shopping-bag text-green-500">
+         </i>
+         <span>
+          MY ORDER
+         </span>
+        </button>
+       </li>
+       <li>
+        <button class="w-full text-left p-3 rounded-lg hover:bg-gray-100 flex items-center space-x-3" id="profileBtn">
+         <i class="fas fa-user text-purple-500">
+         </i>
+         <span>
+          PROFILE
+         </span>
+        </button>
+       </li>
+       <li>
+        <button class="w-full text-left p-3 rounded-lg hover:bg-red-100 text-red-600 flex items-center space-x-3" id="logoutBtn">
+         <i class="fas fa-sign-out-alt">
+         </i>
+         <span>
+          লগ আউট
+         </span>
+        </button>
+       </li>
+      </ul>
+     </nav>
+    </div>
+   </div>
+   <!-- Home Page -->
+   <div class="container mx-auto px-4 py-6" id="homePage">
+    <!-- Logo and Demo Video Section -->
+    <div class="text-center mb-8">
+     <img alt="JY BOOM SHORTS" class="w-24 h-24 mx-auto rounded-full shadow-lg mb-4" src="https://i.imgur.com/DNCjTmA.jpeg"/>
+     <h1 class="text-3xl font-bold text-gray-800 mb-2">
+      JY BOOM SHORTS
+     </h1>
+     <div class="w-20 h-1 bg-green-500 mx-auto mb-6 rounded">
+     </div>
+     <h2 class="text-xl font-semibold text-gray-700 mb-4">
+      ডেমো ভিডিও
+     </h2>
+     <button class="bg-yellow-500 hover:bg-yellow-600 text-white px-8 py-3 rounded-full font-semibold pulse-btn transition duration-300" id="watchVideoBtn">
+      ভিডিও দেখুন
+     </button>
+    </div>
+    <!-- White Line -->
+    <div class="w-full h-1 bg-white mb-8 rounded">
+    </div>
+    <!-- Product Categories -->
+    <div class="mb-8">
+     <h2 class="text-2xl font-bold text-center mb-6 text-gray-800">
+      প্রোডাক্ট ক্যাটাগরি
+     </h2>
+     <!-- Shorts Service Category -->
+     <div class="mb-8">
+      <h3 class="text-xl font-semibold mb-4 text-gray-700">
+       Shorts Service
+      </h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="shortsProducts">
+       <!-- Products will be loaded here -->
+      </div>
+     </div>
+     <!-- Channel Workers Category -->
+     <div class="mb-8">
+      <h3 class="text-xl font-semibold mb-4 text-gray-700">
+       Channel Workers
+      </h3>
+      <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
+       <p class="text-lg text-gray-700 mb-4">
+        নিচের ভয়েস শুনুন
+       </p>
+       <div class="mb-6">
+        <iframe allow="autoplay" class="mx-auto" frameborder="0" height="70" src="https://vocaroo.com/embed/1oQrkO5IwIOY?autoplay=0" width="300">
+        </iframe>
+       </div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+       <!-- Weekly Service -->
+       <div class="bg-white rounded-lg shadow-lg p-6">
+        <h4 class="text-xl font-bold mb-3 text-gray-800">
+         Weekly (৭ দিন)
+        </h4>
+        <div class="mb-4">
+         <div class="flex items-center mb-2">
+          <i class="fas fa-check text-yellow-500 mr-2">
+          </i>
+          <span>
+           শুধু চ্যানেলের ম্যানেজার বানালেই হবে
+          </span>
+         </div>
+         <div class="flex items-center mb-2">
+          <i class="fas fa-check text-yellow-500 mr-2">
+          </i>
+          <span>
+           জিমেইল পাসওয়ার্ড কিছু লাগবে না
+          </span>
+         </div>
+         <div class="flex items-center mb-2">
+          <i class="fas fa-check text-yellow-500 mr-2">
+          </i>
+          <span>
+           প্রতিদিন ২ থেকে ৩ ভিডিও আপলোড করব
+          </span>
+         </div>
+         <div class="flex items-center mb-2">
+          <i class="fas fa-check text-yellow-500 mr-2">
+          </i>
+          <span>
+           ৭ দিনে ২০+ টি ভিডিও আপলোড করব
+          </span>
+         </div>
+        </div>
+        <div class="text-2xl font-bold text-green-600 mb-4">
+         ১০০০ টাকা
+        </div>
+        <button class="w-full bg-green-500 hover:bg-green-600 text-white py-3 rounded-lg font-semibold flex items-center justify-center space-x-2" onclick="contactWhatsApp('weekly')">
+         <i class="fab fa-whatsapp">
+         </i>
+         <span>
+          01965033103
+         </span>
+        </button>
+       </div>
+       <!-- Monthly Service -->
+       <div class="bg-white rounded-lg shadow-lg p-6">
+        <h4 class="text-xl font-bold mb-3 text-gray-800">
+         Monthly (৩০ দিন)
+        </h4>
+        <div class="mb-4">
+         <div class="flex items-center mb-2">
+          <i class="fas fa-check text-yellow-500 mr-2">
+          </i>
+          <span>
+           শুধু চ্যানেলের ম্যানেজার বানালেই হবে
+          </span>
+         </div>
+         <div class="flex items-center mb-2">
+          <i class="fas fa-check text-yellow-500 mr-2">
+          </i>
+          <span>
+           জিমেইল পাসওয়ার্ড কিছু লাগবে না
+          </span>
+         </div>
+         <div class="flex items-center mb-2">
+          <i class="fas fa-check text-yellow-500 mr-2">
+          </i>
+          <span>
+           প্রতিদিন ২ থেকে ৩ ভিডিও আপলোড করব
+          </span>
+         </div>
+         <div class="flex items-center mb-2">
+          <i class="fas fa-check text-yellow-500 mr-2">
+          </i>
+          <span>
+           ৩০ দিনে ১০০+ টি ভিডিও আপলোড করব
+          </span>
+         </div>
+        </div>
+        <div class="text-2xl font-bold text-green-600 mb-4">
+         ৫০০০ টাকা
+        </div>
+        <button class="w-full bg-green-500 hover:bg-green-600 text-white py-3 rounded-lg font-semibold flex items-center justify-center space-x-2" onclick="contactWhatsApp('monthly')">
+         <i class="fab fa-whatsapp">
+         </i>
+         <span>
+          01965033103
+         </span>
+        </button>
+       </div>
+      </div>
+     </div>
+    </div>
+    <!-- Support Section -->
+    <div class="bg-white rounded-lg shadow-lg p-6 text-center">
+     <h3 class="text-xl font-semibold mb-4 text-gray-800">
+      Support
+     </h3>
+     <div class="bg-gray-50 rounded-lg p-4 flex items-center justify-center space-x-4">
+      <i class="fab fa-whatsapp text-green-500 text-2xl">
+      </i>
+      <div class="w-px h-8 bg-gray-300">
+      </div>
+      <div>
+       <div class="font-semibold text-gray-800">
+        01965033103
+       </div>
+       <div class="text-sm text-gray-600">
+        সকাল ৯ টা থেকে - রাত ৩ টা
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+   <!-- Video Page -->
+   <!-- Updated YouTube videos with new URLs and proper embed format -->
+   <!-- Demo Videos Page -->
+   <div class="hidden container mx-auto px-4 py-6" id="demoVideosPage">
+    <div class="flex items-center mb-6">
+     <button class="text-2xl text-gray-600 mr-4" id="backFromVideo">
+      <i class="fas fa-arrow-left">
+      </i>
+     </button>
+     <h2 class="text-2xl font-bold text-gray-800">
+      ডেমো ভিডিও
+     </h2>
+    </div>
+    <!-- Updated YouTube embeds with nocookie domain and better parameters for Shorts compatibility -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+     <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+      <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" frameborder="0" height="200" src="https://www.youtube-nocookie.com/embed/G2c0ACV6zGI?rel=0&amp;modestbranding=1&amp;playsinline=1" width="100%">
+      </iframe>
+     </div>
+     <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+      <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" frameborder="0" height="200" src="https://www.youtube-nocookie.com/embed/ZgxHp4M9nLI?rel=0&amp;modestbranding=1&amp;playsinline=1" width="100%">
+      </iframe>
+     </div>
+     <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+      <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" frameborder="0" height="200" src="https://www.youtube-nocookie.com/embed/HUDDlqEaqSw?rel=0&amp;modestbranding=1&amp;playsinline=1" width="100%">
+      </iframe>
+     </div>
+     <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+      <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" frameborder="0" height="200" src="https://www.youtube-nocookie.com/embed/Vz36vejY3zY?rel=0&amp;modestbranding=1&amp;playsinline=1" width="100%">
+      </iframe>
+     </div>
+     <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+      <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" frameborder="0" height="200" src="https://www.youtube-nocookie.com/embed/Wq3_Q077iWE?rel=0&amp;modestbranding=1&amp;playsinline=1" width="100%">
+      </iframe>
+     </div>
+     <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+      <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" frameborder="0" height="200" src="https://www.youtube-nocookie.com/embed/HAn-z_4boME?rel=0&amp;modestbranding=1&amp;playsinline=1" width="100%">
+      </iframe>
+     </div>
+     <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+      <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" frameborder="0" height="200" src="https://www.youtube-nocookie.com/embed/gSHE3py0UHw?rel=0&amp;modestbranding=1&amp;playsinline=1" width="100%">
+      </iframe>
+     </div>
+     <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+      <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" frameborder="0" height="200" src="https://www.youtube-nocookie.com/embed/JKVkc5sZUWI?rel=0&amp;modestbranding=1&amp;playsinline=1" width="100%">
+      </iframe>
+     </div>
+    </div>
+   </div>
+   <!-- Order Details Page -->
+   <div class="hidden container mx-auto px-4 py-6" id="orderDetailsPage">
+    <div class="flex items-center mb-6">
+     <button class="text-2xl text-gray-600 mr-4" id="backFromOrderDetails">
+      <i class="fas fa-arrow-left">
+      </i>
+     </button>
+     <h2 class="text-2xl font-bold text-gray-800">
+      অর্ডার বিস্তারিত
+     </h2>
+    </div>
+    <div class="bg-white rounded-lg shadow-lg p-6">
+     <div id="orderDetailsContent">
+      <!-- Order details will be loaded here -->
+     </div>
+     <div class="mt-6">
+      <label class="block text-sm font-medium text-gray-700 mb-2">
+       আপনার চ্যানেলের URL লিংক দিন
+      </label>
+      <input class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" id="channelUrl" placeholder="https://youtube.com/channel/..." type="url"/>
+     </div>
+     <button class="w-full mt-6 bg-gray-400 text-white py-3 rounded-lg font-semibold cursor-not-allowed" disabled="" id="confirmOrderBtn">
+      কনফার্ম অর্ডার
+     </button>
+    </div>
+   </div>
+   <!-- Payment Page -->
+   <div class="hidden container mx-auto px-4 py-6" id="paymentPage">
+    <div class="flex items-center mb-6">
+     <button class="text-2xl text-gray-600 mr-4" id="backFromPayment">
+      <i class="fas fa-arrow-left">
+      </i>
+     </button>
+     <h2 class="text-2xl font-bold text-gray-800">
+      পেমেন্ট
+     </h2>
+    </div>
+    <div class="bg-white rounded-lg shadow-lg p-6">
+     <div id="paymentDetailsContent">
+      <!-- Payment details will be loaded here -->
+     </div>
+     <div class="mt-6">
+      <h3 class="text-lg font-semibold mb-4">
+       Select Payment Method
+      </h3>
+      <div class="w-full h-px bg-gray-300 mb-4">
+      </div>
+      <div class="grid grid-cols-2 gap-4">
+       <button class="payment-method border-2 border-gray-300 rounded-lg p-4 hover:border-pink-500 transition duration-300" id="bkashBtn">
+        <img alt="Bkash" class="w-full h-12 object-contain" src="https://i.imgur.com/2OcgveJ.jpeg"/>
+       </button>
+       <button class="payment-method border-2 border-gray-300 rounded-lg p-4 hover:border-orange-500 transition duration-300" id="nagadBtn">
+        <img alt="Nagad" class="w-full h-12 object-contain" src="https://i.imgur.com/6Bp7s7a.png"/>
+       </button>
+      </div>
+     </div>
+    </div>
+   </div>
+   <!-- Payment Details Page -->
+   <div class="hidden container mx-auto px-4 py-6" id="paymentDetailsPage">
+    <div class="flex items-center mb-6">
+     <button class="text-2xl text-gray-600 mr-4" id="backFromPaymentDetails">
+      <i class="fas fa-arrow-left">
+      </i>
+     </button>
+     <h2 class="text-2xl font-bold text-gray-800">
+      পেমেন্ট বিস্তারিত
+     </h2>
+    </div>
+    <div class="bg-white rounded-lg shadow-lg p-6" id="paymentMethodPage">
+     <div id="paymentMethodContent">
+      <!-- Payment method content will be loaded here -->
+     </div>
+     <div class="mt-6">
+      <label class="block text-sm font-medium text-gray-700 mb-2">
+       ট্রানজেকশন নাম্বার দিন
+      </label>
+      <input class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" id="transactionId" placeholder="ট্রানজেকশন আইডি লিখুন..." type="text"/>
+     </div>
+     <button class="w-full mt-6 bg-gray-400 text-white py-3 rounded-lg font-semibold cursor-not-allowed" disabled="" id="verifyPaymentBtn">
+      ভেরিফাই পাঠান
+     </button>
+    </div>
+   </div>
+   <!-- My Orders Page -->
+   <div class="hidden container mx-auto px-4 py-6" id="myOrdersPage">
+    <div class="flex items-center mb-6">
+     <button class="text-2xl text-gray-600 mr-4" id="backFromOrders">
+      <i class="fas fa-arrow-left">
+      </i>
+     </button>
+     <h2 class="text-2xl font-bold text-gray-800">
+      আমার অর্ডার
+     </h2>
+    </div>
+    <div id="ordersContainer">
+     <!-- Orders will be loaded here -->
+    </div>
+   </div>
+   <!-- Profile Page -->
+   <div class="hidden container mx-auto px-4 py-6" id="profilePage">
+    <div class="flex items-center mb-6">
+     <button class="text-2xl text-gray-600 mr-4" id="backFromProfile">
+      <i class="fas fa-arrow-left">
+      </i>
+     </button>
+     <h2 class="text-2xl font-bold text-gray-800">
+      প্রোফাইল
+     </h2>
+    </div>
+    <div class="bg-white rounded-lg shadow-lg p-6">
+     <div class="text-center mb-6">
+      <div class="w-20 h-20 bg-blue-500 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-4" id="profileIcon">
+      </div>
+      <h3 class="text-xl font-semibold text-gray-800" id="profileName">
+      </h3>
+     </div>
+     <div class="space-y-4">
+      <div>
+       <label class="block text-sm font-medium text-gray-700 mb-1">
+        ইমেইল
+       </label>
+       <div class="p-3 bg-gray-50 rounded-lg" id="profileEmail">
+       </div>
+      </div>
+      <div>
+       <label class="block text-sm font-medium text-gray-700 mb-1">
+        পাসওয়ার্ড
+       </label>
+       <div class="p-3 bg-gray-50 rounded-lg" id="profilePassword">
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+  <!-- Firebase SDK -->
+  <script type="module">
+   import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js';
+        import { getDatabase, ref, set, get, push, onValue, remove } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js';
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAfoT0apRb92VO-hbUc3h1vLhjuduGPpcQ",
+            authDomain: "lewra-74def.firebaseapp.com",
+            databaseURL: "https://lewra-74def-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "lewra-74def",
+            storageBucket: "lewra-74def.firebasestorage.app",
+            messagingSenderId: "744736222303",
+            appId: "1:744736222303:web:5a25be7e16986bd7663fea",
+            measurementId: "G-ZMTD78BRKN"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const database = getDatabase(app);
+
+        let currentUser = null;
+        let currentOrderData = null;
+        let allProducts = {};
+
+        console.log("[v0] Firebase initialized successfully");
+
+        const checkStoredLogin = () => {
+            const storedUser = localStorage.getItem('jyboom_user');
+            if (storedUser) {
+                try {
+                    const userData = JSON.parse(storedUser);
+                    currentUser = userData;
+                    // Instant login without delays
+                    showMainWebsite();
+                    loadProducts();
+                    console.log("[v0] Instant auto-login successful");
+                } catch (error) {
+                    console.error("[v0] Error parsing stored user data:", error);
+                    localStorage.removeItem('jyboom_user');
+                }
+            }
+        };
+
+        const storeUserData = (user, additionalData = {}) => {
+            const userData = {
+                uid: user.uid,
+                email: user.email,
+                ...additionalData
+            };
+            localStorage.setItem('jyboom_user', JSON.stringify(userData));
+            currentUser = userData;
+        };
+
+        const clearStoredUser = () => {
+            localStorage.removeItem('jyboom_user');
+            currentUser = null;
+        };
+
+        const showMainWebsite = () => {
+            document.getElementById('authContainer').classList.add('hidden');
+            document.getElementById('mainWebsite').classList.remove('hidden');
+            
+            if (currentUser) {
+                const userIcon = document.getElementById('userIcon');
+                const profileIcon = document.getElementById('profileIcon');
+                const profileName = document.getElementById('profileName');
+                const profileEmail = document.getElementById('profileEmail');
+                const profilePassword = document.getElementById('profilePassword');
+                
+                const firstLetter = currentUser.name ? currentUser.name.charAt(0).toUpperCase() : currentUser.email.charAt(0).toUpperCase();
+                userIcon.textContent = firstLetter;
+                profileIcon.textContent = firstLetter;
+                profileName.textContent = currentUser.name || currentUser.email;
+                profileEmail.textContent = currentUser.email;
+                profilePassword.textContent = currentUser.password || '••••••••';
+            }
+            
+            loadProducts();
+            initDemoProducts();
+        };
+
+        const showAuthContainer = () => {
+            document.getElementById('authContainer').classList.remove('hidden');
+            document.getElementById('mainWebsite').classList.add('hidden');
+        };
+
+        document.getElementById('registerFormElement').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            console.log("[v0] Registration form submitted");
+            
+            const name = document.getElementById('registerName').value.trim();
+            const email = document.getElementById('registerEmail').value.trim();
+            const password = document.getElementById('registerPassword').value.trim();
+            
+            if (!name || !email || !password) {
+                showMessage('সব ফিল্ড পূরণ করুন!', 'error');
+                return;
+            }
+            
+            if (password.length < 6) {
+                showMessage('পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের হতে হবে!', 'error');
+                return;
+            }
+            
+            try {
+                // Check if user already exists in database
+                const usersRef = ref(database, 'users');
+                const snapshot = await get(usersRef);
+                const users = snapshot.val() || {};
+                
+                const existingUser = Object.values(users).find(user => user.email === email);
+                if (existingUser) {
+                    showMessage('এই ইমেইল দিয়ে ইতিমধ্যে রেজিস্টার করা হয়েছে!', 'error');
+                    return;
+                }
+                
+                // Create user with Firebase Auth
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+                
+                // Save user data to database
+                const userData = {
+                    uid: user.uid,
+                    name: name,
+                    email: email,
+                    password: password,
+                    createdAt: new Date().toISOString()
+                };
+                
+                await set(ref(database, `users/${user.uid}`), userData);
+                
+                // Store user data for persistent login
+                storeUserData(user, { name, password });
+                
+                showMessage('আপনি সফলভাবে রেজিস্টার হয়েছেন!');
+                
+                // Clear form
+                document.getElementById('registerName').value = '';
+                document.getElementById('registerEmail').value = '';
+                document.getElementById('registerPassword').value = '';
+                
+                // Show main website
+                setTimeout(() => {
+                    showMainWebsite();
+                }, 1500);
+                
+            } catch (error) {
+                console.error("[v0] Registration error:", error);
+                if (error.code === 'auth/email-already-in-use') {
+                    showMessage('এই ইমেইল দিয়ে ইতিমধ্যে রেজিস্টার করা হয়েছে!', 'error');
+                } else if (error.code === 'auth/weak-password') {
+                    showMessage('পাসওয়ার্ড খুবই দুর্বল!', 'error');
+                } else if (error.code === 'auth/invalid-email') {
+                    showMessage('ইমেইল ঠিকানা সঠিক নয়!', 'error');
+                } else {
+                    showMessage('রেজিস্টার করতে সমস্যা হয়েছে!', 'error');
+                }
+            }
+        });
+
+        document.getElementById('loginFormElement').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            console.log("[v0] Login form submitted");
+            
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value.trim();
+            
+            if (!email || !password) {
+                showMessage('ইমেইল এবং পাসওয়ার্ড দিন!', 'error');
+                return;
+            }
+            
+            try {
+                // Check if user exists in database first
+                const usersRef = ref(database, 'users');
+                const snapshot = await get(usersRef);
+                const users = snapshot.val() || {};
+                
+                const existingUser = Object.values(users).find(user => user.email === email);
+                if (!existingUser) {
+                    showMessage('এই ইমেইল দিয়ে কোন অ্যাকাউন্ট পাওয়া যায়নি!', 'error');
+                    return;
+                }
+                
+                // Sign in with Firebase Auth
+                const userCredential = await signInWithEmailAndPassword(auth, email, password);
+                const user = userCredential.user;
+                
+                // Store user data for persistent login
+                storeUserData(user, { 
+                    name: existingUser.name, 
+                    password: existingUser.password 
+                });
+                
+                showMessage('সফলভাবে লগইন হয়েছেন!');
+                
+                // Clear form
+                document.getElementById('loginEmail').value = '';
+                document.getElementById('loginPassword').value = '';
+                
+                // Show main website
+                setTimeout(() => {
+                    showMainWebsite();
+                }, 1500);
+                
+            } catch (error) {
+                console.error("[v0] Login error:", error);
+                if (error.code === 'auth/user-not-found') {
+                    showMessage('এই ইমেইল দিয়ে কোন অ্যাকাউন্ট পাওয়া যায়নি!', 'error');
+                } else if (error.code === 'auth/wrong-password') {
+                    showMessage('পাসওয়ার্ড ভুল!', 'error');
+                } else if (error.code === 'auth/invalid-email') {
+                    showMessage('ইমেইল ঠিকানা সঠিক নয়!', 'error');
+                } else {
+                    showMessage('লগইন করতে সমস্যা হয়েছে!', 'error');
+                }
+            }
+        });
+
+        document.getElementById('logoutBtn').addEventListener('click', async () => {
+            try {
+                await signOut(auth);
+                clearStoredUser();
+                showMessage('সফলভাবে লগ আউট হয়েছেন!');
+                setTimeout(() => {
+                    showAuthContainer();
+                }, 1500);
+            } catch (error) {
+                console.error("[v0] Logout error:", error);
+                showMessage('লগ আউট করতে সমস্যা হয়েছে!', 'error');
+            }
+        });
+
+        window.addEventListener('load', () => {
+            checkStoredLogin();
+        });
+
+
+        const initDemoProducts = async () => {
+            const productsRef = ref(database, 'products');
+            const snapshot = await get(productsRef);
+            
+            if (!snapshot.exists()) {
+                const demoProducts = {
+                    product1: {
+                        title: "YouTube Shorts Boost Package",
+                        price: "৫০০",
+                        features: [
+                            "১০০০+ ভিউ গ্যারান্টি",
+                            "২৪ ঘন্টার মধ্যে ডেলিভারি",
+                            "১০০% রিয়েল ভিউ",
+                            "লাইফটাইম সাপোর্ট",
+                            "মানি ব্যাক গ্যারান্টি"
+                        ],
+                        category: "shorts"
+                    },
+                    product2: {
+                        title: "Premium Shorts Service",
+                        price: "১০০০",
+                        features: [
+                            "৫০০০+ ভিউ গ্যারান্টি",
+                            "১২ ঘন্টার মধ্যে ডেলিভারি",
+                            "১০০% রিয়েল ভিউ",
+                            "কাস্টম কিওয়ার্ড অপটিমাইজেশন",
+                            "ফ্রি রিভিশন",
+                            "২৪/৭ সাপোর্ট"
+                        ],
+                        category: "shorts"
+                    }
+                };
+                
+                for (const [key, product] of Object.entries(demoProducts)) {
+                    await set(ref(database, `products/${key}`), product);
+                }
+                console.log("[v0] Demo products initialized");
+            }
+        };
+
+        const showMessage = (message, type = 'success') => {
+            const messageContainer = document.getElementById('messageContainer');
+            const messageBox = document.getElementById('messageBox');
+            const messageText = document.getElementById('messageText');
+            
+            messageText.textContent = message;
+            messageBox.className = `${type === 'success' ? 'bg-green-500' : 'bg-red-500'} text-white p-4 text-center slide-in`;
+            messageContainer.classList.remove('hidden');
+            
+            setTimeout(() => {
+                messageContainer.classList.add('hidden');
+            }, 3000);
+        };
+
+        document.getElementById('showRegister').addEventListener('click', () => {
+            document.getElementById('loginForm').classList.add('hidden');
+            document.getElementById('registerForm').classList.remove('hidden');
+        });
+
+        document.getElementById('showLogin').addEventListener('click', () => {
+            document.getElementById('registerForm').classList.add('hidden');
+            document.getElementById('loginForm').classList.remove('hidden');
+        });
+
+        const showPage = (pageId) => {
+            // Hide all pages
+            const pages = ['homePage', 'demoVideosPage', 'orderDetailsPage', 'paymentPage', 'paymentDetailsPage', 'myOrdersPage', 'profilePage'];
+            pages.forEach(page => {
+                document.getElementById(page).classList.add('hidden');
+            });
+            
+            // Show selected page
+            document.getElementById(pageId).classList.remove('hidden');
+            
+            // Close menu
+            document.getElementById('sideMenu').classList.add('hidden');
+        };
+
+        // Menu event listeners
+        document.getElementById('menuToggle').addEventListener('click', () => {
+            document.getElementById('sideMenu').classList.remove('hidden');
+        });
+
+        document.getElementById('closeMenu').addEventListener('click', () => {
+            document.getElementById('sideMenu').classList.add('hidden');
+        });
+
+        document.getElementById('homeBtn').addEventListener('click', () => showPage('homePage'));
+        document.getElementById('myOrderBtn').addEventListener('click', () => {
+            loadUserOrders();
+            showPage('myOrdersPage');
+        });
+        document.getElementById('profileBtn').addEventListener('click', () => showPage('profilePage'));
+
+        // Back button functionality
+        document.getElementById('backFromVideo').addEventListener('click', () => showPage('homePage'));
+        document.getElementById('backFromOrderDetails').addEventListener('click', () => showPage('homePage'));
+        document.getElementById('backFromPayment').addEventListener('click', () => showPage('orderDetailsPage'));
+        document.getElementById('backFromPaymentDetails').addEventListener('click', () => showPage('paymentPage'));
+        document.getElementById('backFromOrders').addEventListener('click', () => showPage('homePage'));
+        document.getElementById('backFromProfile').addEventListener('click', () => showPage('homePage'));
+
+        // Video page functionality
+        document.getElementById('watchVideoBtn').addEventListener('click', () => showPage('demoVideosPage'));
+
+
+        const loadProducts = async () => {
+            try {
+                const productsRef = ref(database, 'products');
+                onValue(productsRef, (snapshot) => {
+                    const products = snapshot.val() || {};
+                    allProducts = products;
+                    
+                    const shortsContainer = document.getElementById('shortsProducts');
+                    shortsContainer.innerHTML = '';
+                    
+                    Object.entries(products).forEach(([key, product]) => {
+                        if (product.category === 'shorts') {
+                            const productCard = document.createElement('div');
+                            productCard.className = 'bg-white rounded-lg shadow-lg p-6';
+                            
+                            const featuresHTML = product.features.map(feature => 
+                                `<div class="flex items-center mb-2">
+                                    <i class="fas fa-check text-green-500 mr-2"></i>
+                                    <span class="text-gray-700">${feature}</span>
+                                </div>`
+                            ).join('');
+                            
+                            productCard.innerHTML = `
+                                <h4 class="text-xl font-bold mb-3 text-gray-800">${product.title}</h4>
+                                <div class="mb-4">${featuresHTML}</div>
+                                <div class="text-2xl font-bold text-green-600 mb-4">${product.price} টাকা</div>
+                                <button onclick="orderProduct('${key}')" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition duration-300">
+                                    Order Now
+                                </button>
+                            `;
+                            
+                            shortsContainer.appendChild(productCard);
+                        }
+                    });
+                    console.log("[v0] Products loaded successfully with real-time updates");
+                });
+            } catch (error) {
+                console.error("[v0] Error loading products:", error);
+            }
+        };
+
+        window.orderProduct = async (productId) => {
+            if (!currentUser) {
+                showMessage('দয়া করে প্রথমে লগইন করুন!', 'error');
+                return;
+            }
+
+            // Check user's pending orders
+            try {
+                const ordersRef = ref(database, 'orders');
+                const snapshot = await get(ordersRef);
+                const allOrders = snapshot.val() || {};
+                
+                const userPendingOrders = Object.values(allOrders).filter(order => 
+                    order.userEmail === currentUser.email && order.status === 'pending'
+                );
+                
+                if (userPendingOrders.length >= 2) {
+                    showMessage('আপনার দুইটি অর্ডার pending রয়েছে। দুইটি অর্ডারের মধ্যে complete হয়ে গেলে আপনি আবার দুইটি অর্ডার দিতে পারবেন।', 'error');
+                    return;
+                }
+            } catch (error) {
+                console.error("[v0] Error checking user orders:", error);
+            }
+
+            const product = allProducts[productId];
+            if (product) {
+                currentOrderData = { ...product, productId };
+                loadOrderDetails();
+                showPage('orderDetailsPage');
+            }
+        };
+
+        const loadOrderDetails = () => {
+            const orderDetailsContent = document.getElementById('orderDetailsContent');
+            const featuresHTML = currentOrderData.features.map(feature => 
+                `<div class="flex items-center mb-2">
+                    <i class="fas fa-check text-green-500 mr-2"></i>
+                    <span class="text-gray-700">${feature}</span>
+                </div>`
+            ).join('');
+            
+            orderDetailsContent.innerHTML = `
+                <h3 class="text-xl font-bold mb-3">${currentOrderData.title}</h3>
+                <div class="mb-4">${featuresHTML}</div>
+                <div class="text-2xl font-bold text-green-600">${currentOrderData.price} টাকা</div>
+            `;
+        };
+
+        // Channel URL validation
+        document.getElementById('channelUrl').addEventListener('input', (e) => {
+            const url = e.target.value.trim();
+            const confirmBtn = document.getElementById('confirmOrderBtn');
+            
+            if (url && url.includes('youtube.com')) {
+                confirmBtn.classList.remove('bg-gray-400', 'cursor-not-allowed');
+                confirmBtn.classList.add('bg-blue-600', 'hover:bg-blue-700');
+                confirmBtn.disabled = false;
+            } else {
+                confirmBtn.classList.add('bg-gray-400', 'cursor-not-allowed');
+                confirmBtn.classList.remove('bg-blue-600', 'hover:bg-blue-700');
+                confirmBtn.disabled = true;
+            }
+        });
+
+        // Confirm order button
+        document.getElementById('confirmOrderBtn').addEventListener('click', () => {
+            const channelUrl = document.getElementById('channelUrl').value.trim();
+            if (channelUrl && currentOrderData) {
+                currentOrderData.channelUrl = channelUrl;
+                
+                const paymentDetailsContent = document.getElementById('paymentDetailsContent');
+                paymentDetailsContent.innerHTML = `
+                    <h3 class="text-xl font-bold mb-3">${currentOrderData.title}</h3>
+                    <div class="text-2xl font-bold text-green-600 mb-4">${currentOrderData.price} টাকা</div>
+                `;
+                
+                showPage('paymentPage');
+            }
+        });
+
+        // Payment method selection
+        document.getElementById('bkashBtn').addEventListener('click', () => {
+            currentOrderData.paymentMethod = 'bkash';
+            showPaymentDetails('bkash');
+        });
+
+        document.getElementById('nagadBtn').addEventListener('click', () => {
+            currentOrderData.paymentMethod = 'nagad';
+            showPaymentDetails('nagad');
+        });
+
+        const showPaymentDetails = (method) => {
+            const paymentMethodContent = document.getElementById('paymentMethodContent');
+            const bgColor = method === 'bkash' ? 'bg-pink-50' : 'bg-orange-50';
+            const number = '01965033103';
+            
+            paymentMethodContent.innerHTML = `
+                <div class="${bgColor} p-6 rounded-lg">
+                    <h3 class="text-xl font-bold mb-3">${currentOrderData.title}</h3>
+                    <div class="text-2xl font-bold text-green-600 mb-4">${currentOrderData.price} টাকা</div>
+                    <div class="mb-4">
+                        <p class="text-lg font-semibold mb-2">${method === 'bkash' ? 'বিকাশ' : 'নগদ'} নাম্বার:</p>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-xl font-bold">${number}</span>
+                            <button onclick="copyNumber('${number}')" class="bg-blue-500 hover:bg-blue-600 text-white px-3 py-1 rounded text-sm">
+                                কপি
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            showPage('paymentDetailsPage');
+        };
+
+        // Copy number functionality
+        window.copyNumber = (number) => {
+            navigator.clipboard.writeText(number).then(() => {
+                showMessage('নাম্বার কপি হয়েছে!');
+            });
+        };
+
+        document.getElementById('transactionId').addEventListener('input', (e) => {
+            const transactionId = e.target.value.trim();
+            const verifyBtn = document.getElementById('verifyPaymentBtn');
+            
+            if (transactionId.length >= 10) {
+                verifyBtn.classList.remove('bg-gray-400', 'cursor-not-allowed');
+                verifyBtn.classList.add('bg-green-600', 'hover:bg-green-700');
+                verifyBtn.disabled = false;
+            } else {
+                verifyBtn.classList.add('bg-gray-400', 'cursor-not-allowed');
+                verifyBtn.classList.remove('bg-green-600', 'hover:bg-green-700');
+                verifyBtn.disabled = true;
+            }
+        });
+
+        document.getElementById('verifyPaymentBtn').addEventListener('click', async () => {
+            const transactionId = document.getElementById('transactionId').value.trim();
+            
+            if (transactionId && currentOrderData && currentUser) {
+                try {
+                    // Check if transaction ID already exists
+                    const ordersRef = ref(database, 'orders');
+                    const snapshot = await get(ordersRef);
+                    const allOrders = snapshot.val() || {};
+                    
+                    const existingOrder = Object.values(allOrders).find(order => 
+                        order.transactionId === transactionId
+                    );
+                    
+                    if (existingOrder) {
+                        showMessage('এই ট্রানজেকশন নাম্বারটি আগেই ব্যবহার করা হয়েছে। অনুগ্রহ করে অন্য একটি ট্রানজেকশন নাম্বার দিন।', 'error');
+                        return;
+                    }
+                    
+                    const orderId = 'order_' + Date.now();
+                    const orderData = {
+                        orderId: orderId,
+                        title: currentOrderData.title,
+                        price: currentOrderData.price,
+                        channelUrl: currentOrderData.channelUrl,
+                        paymentMethod: currentOrderData.paymentMethod,
+                        transactionId: transactionId,
+                        userEmail: currentUser.email,
+                        userName: currentUser.name,
+                        status: 'pending',
+                        orderDate: new Date().toISOString()
+                    };
+                    
+                    await set(ref(database, `orders/${orderId}`), orderData);
+                    
+                    showMessage('অর্ডার সফলভাবে সাবমিট হয়েছে!');
+                    
+                    // Clear form and redirect to orders
+                    document.getElementById('transactionId').value = '';
+                    document.getElementById('channelUrl').value = '';
+                    currentOrderData = null;
+                    
+                    loadUserOrders();
+                    showPage('myOrdersPage');
+                    
+                } catch (error) {
+                    console.error("[v0] Error submitting order:", error);
+                    showMessage('অর্ডার সাবমিট করতে সমস্যা হয়েছে!', 'error');
+                }
+            }
+        });
+
+        const loadUserOrders = async () => {
+            if (!currentUser) return;
+            
+            try {
+                const ordersRef = ref(database, 'orders');
+                const snapshot = await get(ordersRef);
+                const allOrders = snapshot.val() || {};
+                
+                const userOrders = Object.values(allOrders)
+                    .filter(order => order.userEmail === currentUser.email)
+                    .sort((a, b) => {
+                        // First sort by status (pending first, then completed)
+                        if (a.status !== b.status) {
+                            if (a.status === 'pending') return -1;
+                            if (b.status === 'pending') return 1;
+                        }
+                        // Then sort by date (newest first within same status)
+                        return new Date(b.orderDate) - new Date(a.orderDate);
+                    });
+                
+                const container = document.getElementById('ordersContainer');
+                
+                if (userOrders.length === 0) {
+                    container.innerHTML = '<div class="bg-white rounded-lg shadow-lg p-6 text-center text-gray-600">কোন অর্ডার পাওয়া যায়নি</div>';
+                    return;
+                }
+                
+                container.innerHTML = userOrders.map(order => {
+                    const statusColor = order.status === 'completed' ? 'bg-green-500' : 
+                                       order.status === 'rejected' ? 'bg-red-500' : 'bg-yellow-500';
+                    const statusText = order.status === 'completed' ? 'Completed' : 
+                                      order.status === 'rejected' ? 'Rejected' : 'Pending';
+                    
+                    return `
+                        <div class="bg-white rounded-lg shadow-lg p-6 mb-4">
+                            <div class="flex justify-between items-start mb-4">
+                                <div>
+                                    <h3 class="text-lg font-bold text-gray-800">${order.title}</h3>
+                                    <p class="text-sm text-gray-600">Order ID: ${order.orderId}</p>
+                                </div>
+                                <span class="${statusColor} text-white px-3 py-1 rounded-full text-sm font-semibold">
+                                    ${statusText}
+                                </span>
+                            </div>
+                            <div class="grid grid-cols-2 gap-4 text-sm mb-4">
+                                <div><strong>Price:</strong> ${order.price} টাকা</div>
+                                <div><strong>Payment:</strong> ${order.paymentMethod === 'bkash' ? 'বিকাশ' : 'নগদ'}</div>
+                                <div><strong>Transaction:</strong> ${order.transactionId}</div>
+                                <div><strong>Date:</strong> ${new Date(order.orderDate).toLocaleDateString()}</div>
+                            </div>
+                            ${order.status === 'completed' && order.driveLink ? `
+                                <div class="border-t pt-4 mt-4">
+                                    ${order.message ? `<div class="text-sm text-gray-600 mb-2">${order.message}</div>` : ''}
+                                    <a href="${order.driveLink}" target="_blank" class="inline-block bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-300">
+                                        <i class="fab fa-google-drive mr-2"></i>Open Video
+                                    </a>
+                                </div>
+                            ` : ''}
+                        </div>
+                    `;
+                }).join('');
+                
+            } catch (error) {
+                console.error("[v0] Error loading user orders:", error);
+            }
+        };
+
+        window.contactWhatsApp = (workType) => {
+            const message = `আমি ${workType} work করাতে চাচ্ছি`;
+            const whatsappUrl = `https://wa.me/8801965033103?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        };
+
+        console.log("[v0] All event listeners initialized");
+  </script>
+ </body>
+</html>
